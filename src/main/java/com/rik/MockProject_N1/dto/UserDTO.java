@@ -1,18 +1,18 @@
 package com.rik.MockProject_N1.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@EqualsAndHashCode
+//@Getter
+//@Setter
+//@AllArgsConstructor
+//@NoArgsConstructor
+//@EqualsAndHashCode
+@Data
 public class UserDTO {
-    private int id;
     private String firstname;
     private String lastname;
+    private String username;
+    private String password;
     private String phone;
     private String email;
 }

@@ -5,9 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class fecontroller {
-    @GetMapping("/account.html"){
+    @GetMapping("/account")
     public String abc(){
-        return "accout";
+        return "account";
         }
     }
-}

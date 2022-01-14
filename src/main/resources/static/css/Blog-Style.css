@@ -12,7 +12,7 @@ html{
     
 }
 .Thang-account-banner {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url(/static/Resources/Img/product-detail-img/insde-theme.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url(ResourcesResources/Img/product-detail-img/insde-theme.jpg);
     background-size: cover;
     background-position: center;
     width: 100vw;

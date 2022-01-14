@@ -21,7 +21,7 @@ public class CategoriesController {
     public String getAllCate(Model model){
         List<Categories> categoriesList = categoriesService.findAllCategories();
         model.addAttribute("categoriesList", categoriesList);
-        return "index";
+        return "categoriesmanager";
     }
 
     @GetMapping("/add_category")

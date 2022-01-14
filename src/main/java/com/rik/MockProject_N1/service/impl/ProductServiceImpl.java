@@ -33,6 +33,12 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.listProductByPrice();
     }
 
+    // X
+    @Override
+    public List<Product> getByKeyWord(String str) {
+        return productRepository.findByKeyWord(str);
+    }
+
     @Override
     public void addProduct(Product product) {
         productRepository.save(product);

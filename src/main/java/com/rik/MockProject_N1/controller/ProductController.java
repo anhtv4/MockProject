@@ -70,5 +70,19 @@ public class ProductController {
         return new ResponseEntity<String>("product add oki", HttpStatus.OK);
     }
 
+    //X
+    @GetMapping("/search")
+    public String findProductByName(Product product, Model model, String str){
+        if(str != null ){
+            List<Product> listPr = productService.getByKeyWord(str);
+            model.addAttribute("list", listPr);
+        }
+        else{
+            List<Product> listPr = productService.fillAllProduct();
+            model.addAttribute("list", listPr);
+        }
+        return "find-product";
+    }
+
 
 }

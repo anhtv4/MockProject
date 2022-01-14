@@ -21,8 +21,8 @@ public class CategoriesServiceImpl implements CategoriesService {
     }
 
     @Override
-    public void addCategory(Categories category) {
-        categoriesRepository.save(category);
+    public void addCategory(Categories categories) {
+        categoriesRepository.save(categories);
     }
 
     @Override
@@ -31,7 +31,12 @@ public class CategoriesServiceImpl implements CategoriesService {
     }
 
     @Override
+    public Categories get(Integer id) {
+        return categoriesRepository.findById(id).get();
+    }
+
+    @Override
     public void updateCategory(String str, Integer id) {
-        categoriesRepository.updateCategory(str, id);
+//        categoriesRepository.updateCategory(str, id);
     }
 }

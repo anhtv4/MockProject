@@ -3,43 +3,64 @@ package com.rik.MockProject_N1.controller;
 import com.rik.MockProject_N1.model.Categories;
 import com.rik.MockProject_N1.service.impl.CategoriesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/")
 public class CategoriesController {
 
     @Autowired
     CategoriesServiceImpl categoriesService;
 
     @GetMapping("/category")
-    public ResponseEntity<List<Categories>> getAllProduct(){
-        List<Categories> categoriesList = new ArrayList<>();
-        categoriesList = categoriesService.findAllCategories();
-        return new ResponseEntity<List<Categories>>(categoriesList, HttpStatus.OK);
+    public String getAllCate(Model model){
+        List<Categories> categoriesList = categoriesService.findAllCategories();
+        model.addAttribute("categoriesList", categoriesList);
+        return "index";
     }
 
-    @PostMapping("/category")
-    public ResponseEntity<String> addProduct(@RequestBody Categories categories){
+    @GetMapping("/add_category")
+    public String newCate(Model model){
+        Categories categories = new Categories();
+        model.addAttribute("categories", categories);
+        return "newcategory";
+    }
+
+    @PostMapping("/save")
+    public String saveCategory(@ModelAttribute("categories") Categories categories) {
         categoriesService.addCategory(categories);
-        return new ResponseEntity<String>("category add oki", HttpStatus.OK);
+        return "redirect:/category";
     }
 
-    @DeleteMapping("/category")
-    public ResponseEntity<String> deleteProduct(@RequestParam Integer id){
-        categoriesService.deleteCategory(id);
-        return new ResponseEntity<String>("category: "+ id + " delete oki", HttpStatus.OK);
-    }
-    @PutMapping("/category")
-    public ResponseEntity<String> deleteProduct(@RequestParam String str, Integer id){
 
-        categoriesService.updateCategory(str, id);
-        return new ResponseEntity<String>("product name add: "+ str + " oki", HttpStatus.OK);
+//    @PostMapping("/category")
+//    public ResponseEntity<String> addProduct(@RequestBody Categories categories){
+//        categoriesService.addCategory(categories);
+//        return new ResponseEntity<String>("category add oki", HttpStatus.OK);
+//    }
+
+//    @DeleteMapping("/category/delete")
+//    public void deleteProduct(@RequestParam Integer id){
+//        categoriesService.deleteCategory(id);
+////        return new ResponseEntity<String>("category: "+ id + " delete oki", HttpStatus.OK);
+//    }
+@RequestMapping("/delete/{id}")
+public String deleteCate(@PathVariable(name = "id") int id) {
+    categoriesService.deleteCategory(id);
+    return "redirect:/category";
+}
+
+    @RequestMapping("/edit/{id}")
+    public ModelAndView updateCate(@PathVariable(name = "id") int id){
+        ModelAndView mav = new ModelAndView("edit");
+        Categories categories = categoriesService.get(id);
+        mav.addObject("categories", categories);
+        return mav;
     }
+
 }

@@ -12,8 +12,8 @@ import javax.transaction.Transactional;
 @Repository
 public interface CategoriesRepository extends JpaRepository<Categories, Integer> {
 
-    @Modifying
-    @Transactional
-    @Query(value = "update categories c  set c.title = :str where c.id = :id", nativeQuery = true)
-    void updateCategory(@Param("str") String str, Integer id);
+//    @Modifying
+//    @Transactional
+//    @Query(value = "update categories c  set c.title = :str where c.id = :id", nativeQuery = true)
+//    void updateCategory(@Param("str") String str, Integer id);
 }

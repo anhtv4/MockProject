@@ -72,7 +72,8 @@ public class ProductController {
 
     //X
     @GetMapping("/search")
-    public String findProductByName(Product product, Model model, String str){
+    public String findProductByName(Product product, Model model,@RequestParam(value = "str") String str){
+//        str="bàn";
         if(str != null ){
             List<Product> listPr = productService.getByKeyWord(str);
             model.addAttribute("list", listPr);

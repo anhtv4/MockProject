@@ -1,5 +1,6 @@
 package com.rik.MockProject_N1.controller;
 
+import com.rik.MockProject_N1.dto.LoginUser;
 import com.rik.MockProject_N1.dto.UserDTO;
 import com.rik.MockProject_N1.model.User;
 import com.rik.MockProject_N1.service.impl.UserServiceImpl;
@@ -7,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,29 +23,40 @@ public class UserController {
     @Autowired
     UserServiceImpl userService;
 
-    @GetMapping(value = {"/users"})
-    public ResponseEntity<List<User>> getAllUser(){
-        List<User> userList = new ArrayList<>();
-        userList = userService.fillAllUser();
-        return new ResponseEntity<List<User>>(userList, HttpStatus.OK);
+    //tạo đường dẫn mặc định cho home
+    @GetMapping("/home")
+    public String viewHomePage() {
+        return "index";
     }
 
-    @PostMapping("/users")
-    public ResponseEntity<String> addUser(@RequestBody User user){
-        userService.addUser(user);
-        return new ResponseEntity<String>("User added successful",HttpStatus.OK);
+    @PostMapping("/saveUser")
+    public String saveUser(@ModelAttribute("user") UserDTO userDTO, Model model) {
+        userService.saveUser(userDTO);
+        UserDTO user = new UserDTO();
+        model.addAttribute("user", user);
+        LoginUser loginUser = new LoginUser();
+        model.addAttribute("userLogin", loginUser);
+        return "account";
     }
 
-    @DeleteMapping("/users")
-    public ResponseEntity<String> deleletUser(@RequestParam Integer id){
-        userService.deleteUser(id);
-        return new ResponseEntity<String>("Delete user "+ id +" successful",HttpStatus.OK);
+    @GetMapping("/login")
+    public String login(Model model) {
+        UserDTO userDTO = new UserDTO();
+        model.addAttribute("user", userDTO);
+        LoginUser loginUser = new LoginUser();
+        model.addAttribute("userLogin", loginUser);
+        return "account";
     }
 
-    @PutMapping("/users")
-    public ResponseEntity<String> updateNameUser(@RequestParam String str, Integer id){
-        userService.updateUser(str,id);
-        return new ResponseEntity<String>("Add user by name successful",HttpStatus.OK);
+    @PostMapping("/login")
+    public String loginWeb(@ModelAttribute("userLogin") LoginUser loginUser, HttpServletRequest request) {
+        User user = userService.findByUsernameAndPassword(loginUser.getUsername(), loginUser.getPassword());
+        HttpSession httpSession = request.getSession();
+        if (user != null) {
+            httpSession.setAttribute("login", user);
+            return "redirect:home";
+        }
+        return "account";
     }
 
 

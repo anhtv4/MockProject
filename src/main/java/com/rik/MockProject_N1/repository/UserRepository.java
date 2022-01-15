@@ -10,14 +10,11 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-    @Modifying
-    @Transactional
-    @Query(value = "update users set firstname, lastname = :str where id = :id", nativeQuery = true)
-    void updateNameUser(@Param("str") String str, Integer id);
+    Optional<User> findByUsernameOrPhoneOrEmail(String username, String phone, String email);
 
-//    @Query(name = "find_most_user", nativeQuery = true)
-//    List<UserDTO> mostOrder();
+    Optional<User> findByUsernameAndPassword(String username, String password);
 }

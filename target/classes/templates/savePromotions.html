@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div align="center">
+    <h1>Promotions</h1>
+    <br />
+    <form action="#" th:action="@{/savePromotions}" th:object="${promotions}"
+          method="post">
+        <table border="0" cellpadding="10">
+            <tr>
+                <td>ID:</td>
+                <td><input type="text" th:field="*{id}" /></td>
+            </tr>
+            <tr>
+                <td>PID:</td>
+                <td><input type="text" th:field="*{pid}" /></td>
+            </tr>
+            <tr>
+                <td>CODE:</td>
+                <td><input type="text" th:field="*{code}" /></td>
+            </tr>
+            <tr>
+                <td>START_DATE:</td>
+                <td><input type="text" th:field="*{start_date}" /></td>
+            </tr>
+            <tr>
+                <td>END_DATE:</td>
+                <td><input type="text" th:field="*{end_date}" /></td>
+            </tr>
+            <tr>
+                <td>SALES:</td>
+                <td><input type="text" th:field="*{sales}" /></td>
+            </tr>
+            <tr>
+                <td>DESCRIPTION:</td>
+                <td><input type="text" th:field="*{description}" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit">Save</button></td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

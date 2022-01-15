@@ -37,8 +37,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     // Xuân làm:
     @Modifying
-    @Query(value = "select p.name, p.descriptions, p.price, p.quantity from products p " +
-            "where p.name like %:str%", nativeQuery = true)
+    @Query(value = "select * from products p where p.name like %:str%", nativeQuery = true)
     List<Product> findByKeyWord(@Param("str") String str);
 
 }

@@ -9,7 +9,7 @@ public interface ProductService {
     List<Product> fillAllProductByCategoryIdAndPrice(Integer categoryId, Double price);
     List<Product> findProductByCategoryId(Integer categoryId);
     List<Product> listProductByPrice();
-    List<Product> getByKeyWord(String str); //X
+    List<Product> listAll(String str); //X
 
     void addProduct(Product product);
     void deleteProduct(Integer id);

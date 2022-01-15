@@ -35,8 +35,12 @@ public class ProductServiceImpl implements ProductService {
 
     // X
     @Override
-    public List<Product> getByKeyWord(String str) {
-        return productRepository.findByKeyWord(str);
+    public List<Product> listAll(String str) {
+        if(str != null){
+            return productRepository.findByKeyWord(str);
+        }
+        return productRepository.findAll();
+
     }
 
     @Override

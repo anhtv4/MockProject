@@ -4,6 +4,7 @@ package com.rik.MockProject_N1.controller;
 import com.rik.MockProject_N1.model.Product;
 import com.rik.MockProject_N1.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/products")
+@RequestMapping("/")
 public class ProductController {
     @Autowired
     ProductService productService;
@@ -72,16 +73,10 @@ public class ProductController {
 
     //X
     @GetMapping("/search")
-    public String findProductByName(Product product, Model model,@RequestParam(value = "str") String str){
-//        str="bàn";
-        if(str != null ){
-            List<Product> listPr = productService.getByKeyWord(str);
-            model.addAttribute("list", listPr);
-        }
-        else{
-            List<Product> listPr = productService.fillAllProduct();
-            model.addAttribute("list", listPr);
-        }
+    public String findProductByName(Model model, @Param("str") String str){
+        List<Product> list = productService.listAll(str);
+        model.addAttribute("list", list);
+        model.addAttribute("str", str);
         return "find-product";
     }
 
